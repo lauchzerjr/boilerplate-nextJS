@@ -1,7 +1,18 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-}
+/* eslint-disable @typescript-eslint/no-var-requires */
+const isProd = process.env.NODE_ENV === 'production'
 
-module.exports = nextConfig
+const withPWA = require('next-pwa')({
+  dest: 'public'
+})
+
+module.exports = withPWA({
+  swcMinify: true,
+  experimental: {
+    // Enables the styled-components SWC transform
+    styledComponents: true
+  },
+  pwa: {
+    dest: 'public',
+    disable: !isProd
+  }
+})
